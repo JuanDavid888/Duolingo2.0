@@ -4,17 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
-use App\Models\RoleUser;
 
 class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'label'];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'label',
+    ];
 
+    /**
+     * Relación muchos a muchos con usuarios
+     */
     public function users()
     {
-        return $this->belongsToMany(User::class)->using(RoleUser::class)->withTimestamps();
+        return $this->belongsToMany(User::class, 'role_user');
     }
 }
