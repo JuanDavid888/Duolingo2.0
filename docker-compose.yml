@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    container_name: laravel11-app
+    volumes:
+      - .:/workspaces/${COMPOSE_PROJECT_NAME:-laravel11}
+    working_dir: /workspace
+    command: bash -lc "tail -f /dev/null"
+    environment:
+      - TZ=UTC
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+      - redis
+      - mailpit
+
+  db:
+    image: mysql:8.4.3
+    container_name: laravel11-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: admin
+    volumes:
+      - dbdata-laravel11:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  redis:
+    image: redis:7
+    container_name: laravel11-redis
+    ports:
+      - "6379:6379"
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: laravel11-mailpit
+    ports:
+      - "8025:8025" # UI
+      - "1025:1025" # SMTP
+
+volumes:
+  dbdata-laravel11:

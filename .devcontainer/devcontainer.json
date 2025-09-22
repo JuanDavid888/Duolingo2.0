@@ -1,0 +1,58 @@
+{
+  "name": "Duolingo2.0",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers-extra/features/composer:1": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "nonFreePackages": true,
+      "username": "vscode"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "onecentlin.laravel-blade",
+        "MehediDracula.php-namespace-resolver",
+        "esbenp.prettier-vscode",
+        "vivaxy.vscode-conventional-commits",
+        "amiralizadeh9480.laravel-extra-intellisense",
+        "cweijan.vscode-mysql-client2"
+      ],
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "editor.formatOnSave": true,
+        "php.validate.enable": false,
+        "php.suggest.basic": false,
+        "files.exclude": {
+          "**/node_modules": true
+        },
+        "search.useIgnoreFiles": false
+      }
+    }
+  },
+  "forwardPorts": [8000, 8025, 6379, 3306],
+  "portsAttributes": {
+    "8000": {
+      "label": "Laravel"
+    },
+    "8025": {
+      "label": "Mailpit UI"
+    },
+    "6379": {
+      "label": "Redis"
+    },
+    "3306": {
+      "label": "MySQL"
+    }
+  },
+  "remoteUser": "vscode",
+  "containerUser": "vscode",
+  "initializeCommand": "",
+  "shutdownAction": "stopCompose"
+}
