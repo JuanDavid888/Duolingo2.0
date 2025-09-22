@@ -14,6 +14,7 @@ class Card extends Model
 
     protected $fillable = [
         'id_lesson',
+        'id_category',
         'word',
         'file_path',
         'mime_type',
@@ -24,4 +25,19 @@ class Card extends Model
         'published_at' => 'datetime',
         'deleted_at' => 'datetime'
     ];
+
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class, 'id_lesson');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'id_category');
+    }
+
+    public function answer()
+    {
+        return $this->hasOne(Answer::class, 'id_card');
+    }
 }

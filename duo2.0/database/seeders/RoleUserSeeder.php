@@ -18,7 +18,7 @@ class RoleUserSeeder extends Seeder
 
         // Validation to prevent nulls
         if ($users->isEmpty() || $roles->isEmpty()) {
-            $this->command->warn("There are no users or roles to assign.");
+            $this->command->warn("There are no users or roles to associate.");
             return;
         }
 
@@ -30,6 +30,6 @@ class RoleUserSeeder extends Seeder
             $user->roles()->syncWithoutDetaching($randomRole);
         }
 
-        $this->command->info("Roles assigned to users successfully.");
+        $this->command->info("Roles successfully associated with users.");
     }
 }

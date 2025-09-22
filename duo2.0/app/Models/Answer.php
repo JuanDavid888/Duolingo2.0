@@ -21,4 +21,9 @@ class Answer extends Model
         'published_at' => 'datetime',
         'deleted_at' => 'datetime'
     ];
+
+    public function card()
+    {
+        return $this->belongsTo(Card::class, 'id_card');
+    }
 }

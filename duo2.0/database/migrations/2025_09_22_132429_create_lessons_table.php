@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_category')->constrained('categories')->onDelete('cascade');
             $table->string('title')->unique();
             $table->string('description')->nullable();
-            $table->unsignedInteger('level');
+            $table->enum('level', ['beginner', 'intermediate', 'advanced']);
             $table->timestamps();
         });
     }

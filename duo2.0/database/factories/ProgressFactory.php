@@ -17,7 +17,7 @@ class ProgressFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'score' => fake()->numberBetween(0, 100)
         ];
     }
 }

@@ -14,4 +14,8 @@ class Category extends Model
 
     protected $fillable = ['name', 'description'];
 
+    public function cards()
+    {
+        return $this->hasMany(Card::class, 'id_category');
+    }
 }

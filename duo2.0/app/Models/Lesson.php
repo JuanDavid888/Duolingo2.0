@@ -13,6 +13,7 @@ class Lesson extends Model
     protected $table = "lessons";
 
     protected $fillable = [
+        'id_category',
         'title',
         'description',
         'level'
@@ -22,4 +23,14 @@ class Lesson extends Model
         'published_at' => 'datetime',
         'deleted_at' => 'datetime'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'id_category');
+    }
+
+    public function cards()
+    {
+        return $this->hasMany(Card::class, 'id_lesson');
+    }
 }

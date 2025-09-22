@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_lesson')->constrained('lessons')->onDelete('cascade');
-            $table->string('word');
-            $table->string('file_path');
+            $table->foreignId('id_category')->constrained('categories')->onDelete('cascade');
+            $table->string('word')->unique();
+            $table->string('file_path')->unique();
             $table->string('mime_type');
-            $table->string('code');
+            $table->string('code')->unique();
             $table->timestamps();
         });
     }

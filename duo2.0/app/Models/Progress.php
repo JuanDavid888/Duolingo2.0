@@ -17,4 +17,9 @@ class Progress extends Model
         'id_lesson',
         'score'
     ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
+        'deleted_at' => 'datetime'
+    ];
 }
