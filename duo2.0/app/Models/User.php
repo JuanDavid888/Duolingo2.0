@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,6 +14,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
+        'email_verified_at', 
+        'remember_token'
     ];
 
     protected $hidden = [
@@ -21,10 +25,18 @@ class User extends Authenticatable
     ];
 
     /**
-     * Relación muchos a muchos con roles
+     * Relación uno a muchos con roles
      */
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany(Role::class, 'role_user');
+        return $this->belongsTo(Role::class);  // Un usuario tiene un solo rol
+    }
+
+    /**
+     * Verificar si el usuario tiene un rol específico
+     */
+    public function hasRole($role)
+    {
+        return $this->role->name === $role;
     }
 }

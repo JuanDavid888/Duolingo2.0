@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 
 // Ruta para obtener la información del usuario autenticado
 Route::get('/user', function (Request $request) {
@@ -23,6 +24,7 @@ Route::prefix('')->group(function () {
 
     // Rutas de recursos para cards, lessons y categories
     Route::apiResources([
+        'users'     => UserController::class,
         'cards'     => CardController::class,
         'lessons'   => LessonController::class,
         'categories'=> CategoryController::class,

@@ -28,9 +28,9 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'email_verified_at' => now(),  // Establecemos la verificación del correo
+            'password' => static::$password ??= Hash::make('password'),  // Contraseña por defecto
+            'remember_token' => Str::random(10),  // Token de recordatorio
         ];
     }
 
@@ -40,16 +40,31 @@ class UserFactory extends Factory
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            'email_verified_at' => null,  // Correo no verificado
         ]);
     }
 
+    /**
+     * Asignar roles al usuario.
+     * 
+     * @param  array  $roleNames
+     * @return static
+     */
     public function withRoles(array $roleNames = ['viewer'])
     {
         return $this->afterCreating(function (User $user) use ($roleNames) {
+            // Recorre los nombres de los roles proporcionados
             foreach ($roleNames as $name) {
-                $role = Role::firstOrCreate(['name' => $name]);
-                $user->roles()->attach($role->id);
+                // Buscar o crear el rol
+                $role = Role::firstOrCreate(
+                    ['name' => $name], // Buscar por nombre
+                    ['label' => ucfirst($name) . ' Role'] // Si no existe, crea el rol
+                );
+
+                // Asociar el rol al usuario
+                if ($role) {
+                    $user->role()->syncWithoutDetaching([$role->id]);
+                }
             }
         });
     }

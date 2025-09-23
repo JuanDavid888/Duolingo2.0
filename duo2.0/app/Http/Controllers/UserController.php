@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreCardRequest;
-use App\Http\Requests\UpdateCardRequest;
-use App\Http\Resources\CardResource;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use App\Traits\ApiResponse;
-use App\Models\Card;
 
-class CardController extends Controller
+class UserController extends Controller
 {
     use ApiResponse;
     /**
@@ -18,9 +19,7 @@ class CardController extends Controller
      */
     public function index(Request $request)
     {
-        // Connection with other tables
-        $query = Card::with(['lesson', 'category']);
-
+        $query = User::query();
 
         // Some filters
         if ($request->has('word')) {
@@ -35,17 +34,6 @@ class CardController extends Controller
             $query->where('code', $request->query('code'));
         }
 
-        $lessonId = $request->query('id_lesson');
-        $categoryId = $request->query('id_category');
-
-        if ($lessonId) {
-            $query->where('id_lesson', $lessonId);
-        }
-
-        if ($categoryId) {
-            $query->where('id_category', $categoryId);
-        }
-
         $cards = $query->get();
 
         // Validate that cards isn't empty
@@ -55,31 +43,30 @@ class CardController extends Controller
             ], 404);
         }
 
-        return $this->success(CardResource::collection($cards));
+        return $this->success(UserResource::collection($cards));
     }
 
-
-    public function store(StoreCardRequest $request): JsonResponse
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreUserRequest $request): JsonResponse
     {
         $data = $request->validated();
 
-        if ($request->hasFile('file_path')) {
-            $data['file_path'] = $request->file('file_path')->store('posts', 'public');
-        }
+        $data['email_verified_at'] = now();
+        $data['remember_token'] = Str::random(10);
 
-        $newCard = Card::create($data);
+        // Crear el nuevo usuario con los datos validados
+        $newUser = User::create($data);
 
-        $newCard->load(['lesson', 'category']);
-
-        return $this->success(new CardResource($newCard), 'Card created successfully', 201);
+        // Retornar la respuesta con el recurso UserResource
+        return $this->success(new UserResource($newUser), 'User created successfully', 201);
     }
-
-
 
     /**
      * Display the specified resource.
      */
-    public function show(Card $card)
+    public function show(User $user)
     {
         //
     }
@@ -87,7 +74,7 @@ class CardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Card $card)
+    public function edit(User $user)
     {
         //
     }
@@ -95,7 +82,7 @@ class CardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCardRequest $request, Card $card)
+    public function update(UpdateUserRequest $request, User $user)
     {
         //
     }
@@ -103,7 +90,7 @@ class CardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Card $card)
+    public function destroy(User $user)
     {
         //
     }
