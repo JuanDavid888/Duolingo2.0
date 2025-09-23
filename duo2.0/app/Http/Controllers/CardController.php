@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCardRequest;
 use App\Http\Resources\CardResource;
 use App\Traits\ApiResponse;
 use App\Models\Card;
+use Illuminate\Http\JsonResponse;
 
 class CardController extends Controller
 {
@@ -17,8 +18,11 @@ class CardController extends Controller
      */
     public function index(Request $request)
     {
+        // Connection with other tables
         $query = Card::with(['lesson', 'category']);
 
+
+        // Some filters
         if ($request->has('word')) {
             $query->where('word', 'like', '%' . $request->query('word') . '%');
         }
@@ -33,7 +37,6 @@ class CardController extends Controller
 
         $lessonId = $request->query('id_lesson');
         $categoryId = $request->query('id_category');
-        $perPage = $request->query('per_page', 10); // Number of results per page, default 10
 
         if ($lessonId) {
             $query->where('id_lesson', $lessonId);
@@ -43,53 +46,32 @@ class CardController extends Controller
             $query->where('id_category', $categoryId);
         }
 
-        $cards = $query->paginate($perPage);
+        $cards = $query->get();
 
-        // Verificar si no hay resultados
+        // Validate that cards isn't empty
         if ($cards->isEmpty()) {
             return response()->json([
                 'message' => 'There are no items matching the provided filters.',
             ], 404);
         }
-    
+
         return $this->success(CardResource::collection($cards));
     }
 
-    public function store(StoreCardRequest $request)
-    {
-        // Validamos los datos y obtenemos el archivo
-        $validated = $request->validated(); // Esto validará los datos usando StoreCardRequest
 
-        // Subir el archivo
+    public function store(StoreCardRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
         if ($request->hasFile('file_path')) {
-            $file = $request->file('file_path');
-            
-            // Generamos un nombre único para el archivo
-            $fileName = uniqid('card_', true) . '.' . $file->getClientOriginalExtension();
-            
-            // Guardamos el archivo en el directorio adecuado (puedes cambiar 'public' por el disco que prefieras)
-            $filePath = $file->storeAs('cards', $fileName, 'public'); // 'public' es un ejemplo de disco, puedes configurarlo en config/filesystems.php
-        } else {
-            return response()->json([
-                'message' => 'File is required.'
-            ], 400);
+            $data['file_path'] = $request->file('file_path')->store('posts', 'public');
         }
 
-        // Creamos un nuevo Card en la base de datos
-        $card = Card::create([
-            'id_lesson' => $validated['id_lesson'],
-            'id_category' => $validated['id_category'],
-            'word' => $validated['word'],
-            'file_path' => $filePath, // El archivo guardado
-            'mime_type' => $validated['mime_type'],
-            'code' => $validated['code'],
-        ]);
+        $newCard = Card::create($data);
 
-        // Respondemos con el recurso creado
-        return $this->success(
-            new CardResource($card),
-            'Card created successfully.'
-        );
+        $newCard->load(['lesson', 'category']);
+
+        return $this->success(new CardResource($newCard), 'Card created successfully', 201);
     }
 
 
