@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Kipo</title>
+    <title>Bienvenido a KipoLogin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Variables CSS inspiradas en Kipo */
@@ -35,6 +35,88 @@
             justify-content: center;
             padding: 20px;
             overflow: hidden;
+            position: relative;
+        }
+
+        /* Contenedor de video - Ocupa toda la pantalla */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(7, 59, 76, 0.9);
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .video-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .video-wrapper {
+            width: 80%;
+            max-width: 800px;
+            height: 60%;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .video-content p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .skip-btn {
+            padding: 12px 30px;
+            background: var(--kipo-yellow);
+            border: none;
+            border-radius: 50px;
+            color: var(--kipo-dark);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(255, 209, 102, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.3s ease;
+        }
+
+        .skip-btn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .skip-btn:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 209, 102, 0.6);
         }
 
         /* Efectos de burbujas de fondo */
@@ -65,456 +147,53 @@
             }
         }
 
-        /* Contenedor principal */
-        .login-container {
-            display: flex;
-            background: rgba(255, 252, 249, 0.95);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            overflow: hidden;
-            width: 1000px;
-            max-width: 95%;
-            min-height: 600px;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        /* Sección del formulario */
-        .form-section {
-            flex: 1;
-            padding: 50px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--kipo-yellow);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: var(--kipo-dark);
-            font-size: 1.5rem;
-            box-shadow: 0 5px 15px rgba(255, 209, 102, 0.4);
-        }
-
-        .logo-text {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--kipo-yellow), var(--kipo-orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .form-section h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: var(--kipo-dark);
-            font-weight: 700;
-        }
-
-        .form-section p {
-            color: var(--kipo-dark);
-            opacity: 0.7;
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-        }
-
-        .form-section form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        .input-group i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--kipo-dark);
-            opacity: 0.6;
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        .form-section input {
-            padding: 15px 15px 15px 50px;
-            border: 2px solid rgba(7, 59, 76, 0.1);
-            border-radius: 12px;
-            font-size: 1rem;
-            width: 100%;
-            transition: var(--transition);
-            background-color: rgba(255, 209, 102, 0.1);
-            color: var(--kipo-dark);
-        }
-
-        .form-section input:focus {
-            border-color: var(--kipo-yellow);
-            box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.3);
-            outline: none;
-            background-color: white;
-        }
-
-        .form-section input:focus + i {
-            color: var(--kipo-yellow);
-            opacity: 1;
-        }
-
-        .form-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            font-size: 0.9rem;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            color: var(--kipo-dark);
-        }
-
-        .remember-me input {
-            margin-right: 8px;
-            width: auto;
-            accent-color: var(--kipo-yellow);
-        }
-
-        .forgot-password {
-            color: var(--kipo-light-blue);
-            text-decoration: none;
-            transition: var(--transition);
-            font-weight: 600;
-        }
-
-        .forgot-password:hover {
-            color: var(--kipo-blue);
-            text-decoration: underline;
-        }
-
-        .form-section button {
-            padding: 15px;
-            background: linear-gradient(135deg, var(--kipo-yellow), var(--kipo-orange));
-            border: none;
-            border-radius: 12px;
-            color: var(--kipo-dark);
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 5px 15px rgba(255, 209, 102, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .form-section button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 209, 102, 0.6);
-        }
-
-        .form-section button:active {
-            transform: translateY(0);
-        }
-
-        .form-section button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-
-        .form-section button:hover::after {
-            left: 100%;
-        }
-
-        .register-link {
-            text-align: center;
-            margin-top: 30px;
-            color: var(--kipo-dark);
-            opacity: 0.7;
-        }
-
-        .register-link a {
-            color: var(--kipo-light-blue);
-            text-decoration: none;
-            font-weight: 700;
-            transition: var(--transition);
-        }
-
-        .register-link a:hover {
-            color: var(--kipo-blue);
-            text-decoration: underline;
-        }
-
-        /* Sección de ilustración */
-        .illustration-section {
-            flex: 1;
-            background: linear-gradient(135deg, var(--kipo-yellow), var(--kipo-orange));
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .illustration-section::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.2)"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            animation: moveGrid 20s linear infinite;
-        }
-
-        @keyframes moveGrid {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(-50px, -50px);
-            }
-        }
-
-        .illustration-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            color: var(--kipo-dark);
-        }
-
-        .kipo-frame {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 30px;
-            box-shadow: 0 15px 30px rgba(7, 59, 76, 0.2);
-            border: 8px solid white;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .kipo-frame:hover {
-            transform: scale(1.05) rotate(5deg);
-        }
-
-        .kipo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .illustration-section h2 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .illustration-section p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        /* Mensajes de error */
-        .error-message {
-            color: #E53E3E;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            padding: 10px 15px;
-            background-color: rgba(229, 62, 62, 0.1);
-            border-radius: 8px;
-            border-left: 4px solid #E53E3E;
-            display: flex;
-            align-items: center;
-        }
-
-        .error-message i {
-            margin-right: 10px;
-        }
-
-        /* Indicadores de validación */
-        .validation-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .input-group.valid .validation-icon {
-            opacity: 1;
-            color: var(--kipo-blue);
-        }
-
-        .input-group.invalid .validation-icon {
-            opacity: 1;
-            color: #E53E3E;
-        }
-
-        /* Elementos decorativos Kipo */
-        .kipo-decoration {
-            position: absolute;
-            z-index: -1;
-        }
-
-        .decoration-1 {
-            width: 100px;
-            height: 100px;
-            background: var(--kipo-yellow);
-            border-radius: 50%;
-            top: -30px;
-            right: -30px;
-            opacity: 0.3;
-        }
-
-        .decoration-2 {
-            width: 70px;
-            height: 70px;
-            background: var(--kipo-orange);
-            border-radius: 50%;
-            bottom: -20px;
-            left: -20px;
-            opacity: 0.3;
-        }
-
         /* Responsive */
         @media (max-width: 900px) {
-            .login-container {
-                flex-direction: column;
-                width: 95%;
-                max-width: 500px;
+            .video-content h2 {
+                font-size: 2rem;
             }
             
-            .illustration-section {
-                display: none;
+            .video-content p {
+                font-size: 1rem;
             }
             
-            .form-section {
-                padding: 40px 30px;
+            .video-wrapper {
+                width: 90%;
+                height: 50%;
             }
         }
 
         @media (max-width: 480px) {
-            .form-section {
-                padding: 30px 20px;
+            .video-content h2 {
+                font-size: 1.8rem;
             }
             
-            .form-section h1 {
-                font-size: 2rem;
-            }
-            
-            .form-options {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .forgot-password {
-                margin-top: 10px;
-            }
-            
-            .logo-text {
-                font-size: 1.5rem;
+            .video-wrapper {
+                width: 95%;
+                height: 40%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Burbujas de fondo -->
-    <div class="bubbles" id="bubbles"></div>
-    
-    <!-- Contenedor principal -->
-    <div class="login-container">
-        <!-- Elementos decorativos -->
-        <div class="kipo-decoration decoration-1"></div>
-        <div class="kipo-decoration decoration-2"></div>
-        
-        <!-- Formulario -->
-        <div class="form-section">
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-kiwi-bird"></i>
-                </div>
-                <div class="logo-text">KipoLogin</div>
+    <!-- Contenedor de video introductorio -->
+    <div class="video-container" id="videoContainer">
+        <div class="video-content">
+            <div class="video-wrapper">
+                <!-- Usa tu video local kilpo.mp4 -->
+                <video id="introVideo" autoplay muted>
+                    <source src="{{ asset('img/kilpo.mp4') }}" type="video/mp4">
+                    Tu navegador no soporta el elemento de video.
+                </video>
             </div>
-            
-            <h1>¡Hola de nuevo!</h1>
-            <p>Inicia sesión para continuar tu aventura</p>
-
-            @if ($errors->any())
-                <div class="error-message">
-                    <i class="fas fa-exclamation-circle"></i>
-                    {{ $errors->first() }}
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('login') }}" id="loginForm">
-                @csrf
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" name="email" id="email" placeholder="Correo electrónico" required>
-                    <i class="fas fa-check validation-icon"></i>
-                </div>
-                
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" name="password" id="password" placeholder="Contraseña" required>
-                    <i class="fas fa-check validation-icon"></i>
-                </div>
-                
-                <div class="form-options">
-                    <label class="remember-me">
-                        <input type="checkbox" name="remember"> Recordarme
-                    </label>
-                    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-                </div>
-                
-                <button type="submit">Iniciar sesión</button>
-            </form>
-            
-            <div class="register-link">
-                ¿No tienes una cuenta? <a href="#">Regístrate aquí</a>
-            </div>
-        </div>
-
-        <!-- Ilustración -->
-        <div class="illustration-section">
-            <div class="illustration-content">
-                <div class="kipo-frame">
-                    <img src="{{URL::asset('/img/kipo.jpeg')}}" alt="Kipo el pollito">
-                </div>
-                <h2>¡Bienvenido!</h2>
-                <p>Kipo está listo para acompañarte</p>
-            </div>
+            <h2>¡Bienvenido a KipoLogin!</h2>
+            <p>Disfruta de una experiencia única con nuestro amigable pollito Kipo</p>
+            <button class="skip-btn" id="skipBtn">Continuar <i class="fas fa-forward"></i></button>
         </div>
     </div>
+    
+    <!-- Burbujas de fondo -->
+    <div class="bubbles" id="bubbles"></div>
 
     <script>
         // Crear burbujas de fondo
@@ -551,65 +230,45 @@
             }
         }
         
-        // Validación en tiempo real
-        function setupValidation() {
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
+        // Control del video introductorio
+        function setupVideoIntro() {
+            const videoContainer = document.getElementById('videoContainer');
+            const skipBtn = document.getElementById('skipBtn');
+            const video = document.getElementById('introVideo');
             
-            emailInput.addEventListener('input', function() {
-                validateEmail(this);
+            // Mostrar el botón después de 7 segundos
+            setTimeout(() => {
+                skipBtn.classList.add('visible');
+            }, 7000);
+            
+            // Ocultar video y redirigir al login después de que termine el video
+            video.addEventListener('ended', function() {
+                redirectToLogin();
             });
             
-            passwordInput.addEventListener('input', function() {
-                validatePassword(this);
+            // Permitir saltar el video
+            skipBtn.addEventListener('click', function() {
+                video.pause();
+                redirectToLogin();
             });
             
-            // Validar formulario al enviar
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
-                if (!validateEmail(emailInput) || !validatePassword(passwordInput)) {
-                    e.preventDefault();
-                    // Aquí podrías mostrar un mensaje de error más específico
+            // Si el video no se carga, redirigir después de 10 segundos
+            setTimeout(() => {
+                if (videoContainer.style.visibility !== 'hidden') {
+                    redirectToLogin();
                 }
-            });
+            }, 10000); // 10 segundos como respaldo
         }
         
-        function validateEmail(input) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const isValid = emailRegex.test(input.value);
-            
-            if (isValid) {
-                input.parentElement.classList.add('valid');
-                input.parentElement.classList.remove('invalid');
-            } else if (input.value.length > 0) {
-                input.parentElement.classList.add('invalid');
-                input.parentElement.classList.remove('valid');
-            } else {
-                input.parentElement.classList.remove('valid', 'invalid');
-            }
-            
-            return isValid;
-        }
-        
-        function validatePassword(input) {
-            const isValid = input.value.length >= 6;
-            
-            if (isValid) {
-                input.parentElement.classList.add('valid');
-                input.parentElement.classList.remove('invalid');
-            } else if (input.value.length > 0) {
-                input.parentElement.classList.add('invalid');
-                input.parentElement.classList.remove('valid');
-            } else {
-                input.parentElement.classList.remove('valid', 'invalid');
-            }
-            
-            return isValid;
+        // Función para redirigir al login
+        function redirectToLogin() {
+            window.location.href = "{{ route('login') }}";
         }
         
         // Inicializar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             createBubbles();
-            setupValidation();
+            setupVideoIntro();
         });
     </script>
 </body>
