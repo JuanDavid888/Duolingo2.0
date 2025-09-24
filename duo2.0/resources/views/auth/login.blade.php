@@ -28,110 +28,146 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--kipo-yellow), var(--kipo-orange));
+            margin: 0;
+            padding: 0;
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
             overflow: hidden;
             position: relative;
         }
 
-        /* Contenedor de video - Ocupa toda la pantalla */
-        .video-container {
+        /* Video de fondo que ocupa toda la pantalla */
+        .video-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(7, 59, 76, 0.9);
-            transition: opacity 1s ease, visibility 1s ease;
-        }
-
-        .video-content {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-        }
-
-        .video-wrapper {
-            width: 80%;
-            max-width: 800px;
-            height: 60%;
-            margin-bottom: 20px;
-            border-radius: 15px;
+            z-index: -1;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .video-wrapper video {
+        .video-background video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .video-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            font-weight: 700;
+        /* Capa oscura sobre el video */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(228, 228, 228, 0.767);
+            z-index: 0;
         }
 
-        .video-content p {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
+        /* Contenedor de contenido */
+        .content-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            padding: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--kipo-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: var(--kipo-dark);
+            font-size: 2rem;
+            box-shadow: 0 10px 25px rgba(255, 209, 102, 0.5);
+        }
+
+        .logo-text {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--kipo-yellow), var(--kipo-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-container h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-container p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
             opacity: 0.9;
+            max-width: 600px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .skip-btn {
-            padding: 12px 30px;
+            padding: 15px 40px;
             background: var(--kipo-yellow);
             border: none;
             border-radius: 50px;
             color: var(--kipo-dark);
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.2rem;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 5px 15px rgba(255, 209, 102, 0.4);
+            box-shadow: 0 8px 25px rgba(255, 209, 102, 0.5);
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.3s ease;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, visibility 0.8s ease, transform 0.8s ease;
         }
 
         .skip-btn.visible {
             opacity: 1;
             visibility: visible;
+            transform: translateY(0);
         }
 
         .skip-btn:hover {
             background: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 209, 102, 0.6);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(255, 209, 102, 0.7);
+        }
+
+        .skip-btn i {
+            margin-left: 10px;
         }
 
         /* Efectos de burbujas de fondo */
         .bubbles {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 0;
         }
 
         .bubble {
             position: absolute;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             animation: float 15s infinite linear;
         }
@@ -147,66 +183,105 @@
             }
         }
 
+        /* Indicador de carga */
+        .loading-text {
+            position: absolute;
+            bottom: 30px;
+            color: white;
+            opacity: 0.7;
+            font-size: 1rem;
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
-            .video-content h2 {
-                font-size: 2rem;
+            .content-container h2 {
+                font-size: 2.5rem;
             }
             
-            .video-content p {
-                font-size: 1rem;
+            .content-container p {
+                font-size: 1.2rem;
             }
             
-            .video-wrapper {
-                width: 90%;
-                height: 50%;
+            .logo-text {
+                font-size: 2.2rem;
+            }
+            
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
-            .video-content h2 {
+            .content-container h2 {
+                font-size: 2rem;
+            }
+            
+            .content-container p {
+                font-size: 1rem;
+                padding: 0 20px;
+            }
+            
+            .logo-text {
                 font-size: 1.8rem;
             }
             
-            .video-wrapper {
-                width: 95%;
-                height: 40%;
+            .skip-btn {
+                padding: 12px 30px;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Contenedor de video introductorio -->
-    <div class="video-container" id="videoContainer">
-        <div class="video-content">
-            <div class="video-wrapper">
-                <!-- Usa tu video local kilpo.mp4 -->
-                <video id="introVideo" autoplay muted>
-                    <source src="{{ asset('img/kilpo.mp4') }}" type="video/mp4">
-                    Tu navegador no soporta el elemento de video.
-                </video>
-            </div>
-            <h2>¡Bienvenido a KipoLogin!</h2>
-            <p>Disfruta de una experiencia única con nuestro amigable pollito Kipo</p>
-            <button class="skip-btn" id="skipBtn">Continuar <i class="fas fa-forward"></i></button>
-        </div>
+    <!-- Video de fondo -->
+    <div class="video-background">
+        <video id="introVideo" autoplay muted loop>
+            <source src="{{ asset('img/kiipo.mp4') }}" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
     </div>
+    
+    <!-- Capa oscura sobre el video -->
+    <div class="video-overlay"></div>
     
     <!-- Burbujas de fondo -->
     <div class="bubbles" id="bubbles"></div>
+
+    <!-- Contenido principal -->
+    <div class="content-container">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-kiwi-bird"></i>
+            </div>
+            <div class="logo-text">KipoLogin</div>
+        </div>
+        
+        <h2>¡Bienvenido a KipoLogin!</h2>
+        <p>Disfruta de una experiencia única con nuestro amigable pollito Kipo</p>
+        
+        <button class="skip-btn" id="skipBtn" onclick="redirectToLogin()">
+            Continuar <i class="fas fa-forward"></i>
+        </button>
+        
+        <div class="loading-text" id="loadingText">
+            El video se reproducirá en breve...
+        </div>
+    </div>
 
     <script>
         // Crear burbujas de fondo
         function createBubbles() {
             const bubblesContainer = document.getElementById('bubbles');
-            const bubbleCount = 20;
+            const bubbleCount = 25;
             
             for (let i = 0; i < bubbleCount; i++) {
                 const bubble = document.createElement('div');
                 bubble.classList.add('bubble');
                 
                 // Tamaño aleatorio
-                const size = Math.random() * 60 + 20;
+                const size = Math.random() * 80 + 30;
                 bubble.style.width = `${size}px`;
                 bubble.style.height = `${size}px`;
                 
@@ -215,15 +290,20 @@
                 bubble.style.top = `${Math.random() * 100 + 100}%`;
                 
                 // Duración de animación aleatoria
-                const duration = Math.random() * 20 + 10;
+                const duration = Math.random() * 25 + 15;
                 bubble.style.animationDuration = `${duration}s`;
                 
                 // Retraso aleatorio
-                const delay = Math.random() * 5;
+                const delay = Math.random() * 10;
                 bubble.style.animationDelay = `${delay}s`;
                 
                 // Color basado en la paleta de Kipo
-                const colors = ['rgba(255, 209, 102, 0.3)', 'rgba(255, 158, 109, 0.3)', 'rgba(6, 214, 160, 0.3)'];
+                const colors = [
+                    'rgba(255, 209, 102, 0.3)', 
+                    'rgba(255, 158, 109, 0.3)', 
+                    'rgba(6, 214, 160, 0.3)',
+                    'rgba(17, 138, 178, 0.3)'
+                ];
                 bubble.style.background = colors[Math.floor(Math.random() * colors.length)];
                 
                 bubblesContainer.appendChild(bubble);
@@ -232,18 +312,34 @@
         
         // Control del video introductorio
         function setupVideoIntro() {
-            const videoContainer = document.getElementById('videoContainer');
             const skipBtn = document.getElementById('skipBtn');
+            const loadingText = document.getElementById('loadingText');
             const video = document.getElementById('introVideo');
+            
+            // Verificar si el video se está cargando
+            video.addEventListener('loadeddata', function() {
+                loadingText.textContent = "Video cargado correctamente";
+                setTimeout(() => {
+                    loadingText.style.opacity = '0';
+                }, 2000);
+            });
+            
+            video.addEventListener('error', function() {
+                loadingText.textContent = "Error al cargar el video. Redirigiendo...";
+                setTimeout(redirectToLogin, 2000);
+            });
             
             // Mostrar el botón después de 7 segundos
             setTimeout(() => {
                 skipBtn.classList.add('visible');
+                loadingText.textContent = "Presiona Continuar para comenzar";
             }, 7000);
             
-            // Ocultar video y redirigir al login después de que termine el video
+            // Redirigir al login después de que termine el video (si no está en loop)
             video.addEventListener('ended', function() {
-                redirectToLogin();
+                if (!video.loop) {
+                    redirectToLogin();
+                }
             });
             
             // Permitir saltar el video
@@ -252,24 +348,60 @@
                 redirectToLogin();
             });
             
-            // Si el video no se carga, redirigir después de 10 segundos
+            // Redirigir automáticamente después de 30 segundos como respaldo
             setTimeout(() => {
-                if (videoContainer.style.visibility !== 'hidden') {
+                if (skipBtn.style.visibility !== 'hidden') {
                     redirectToLogin();
                 }
-            }, 10000); // 10 segundos como respaldo
+            }, 30000);
         }
         
-        // Función para redirigir al login
+        // En login.blade.php - cambia la función redirectToLogin()
         function redirectToLogin() {
-            window.location.href = "{{ route('login') }}";
+    // Agregar efecto de desvanecimiento
+    document.body.style.transition = 'opacity 0.8s ease';
+    document.body.style.opacity = '0';
+    
+    setTimeout(() => {
+        window.location.href = "{{ route('inicio.principal') }}";
+    }, 800);
+}
+        
+        // Efecto de escritura para el texto de carga
+        function typeWriterEffect() {
+            const text = "Cargando experiencia Kipo...";
+            const loadingText = document.getElementById('loadingText');
+            let i = 0;
+            
+            function type() {
+                if (i < text.length) {
+                    loadingText.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, 100);
+                }
+            }
+            
+            // Comenzar después de un breve retraso
+            setTimeout(type, 1000);
         }
         
         // Inicializar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             createBubbles();
             setupVideoIntro();
+            typeWriterEffect();
+            
+            // Efecto de entrada para el contenido
+            setTimeout(() => {
+                document.querySelector('.content-container').style.opacity = '1';
+                document.querySelector('.content-container').style.transform = 'translateY(0)';
+            }, 500);
         });
+        
+        // Estilos iniciales para animación de entrada
+        document.querySelector('.content-container').style.opacity = '0';
+        document.querySelector('.content-container').style.transform = 'translateY(20px)';
+        document.querySelector('.content-container').style.transition = 'opacity 1s ease, transform 1s ease';
     </script>
 </body>
 </html>

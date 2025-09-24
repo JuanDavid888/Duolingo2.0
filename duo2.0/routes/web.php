@@ -1,14 +1,18 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
+// Ruta para la página de inicio (video introductorio)
 Route::get('/', function () {
     return view('auth.login');
-});
+})->name('inicio');
 
+// Ruta para la página principal después del video
+Route::get('/inicio', function () {
+    return view('auth.inicio');
+})->name('inicio.principal');
+
+// Ruta login (si necesitas una específica para login)
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
-
-Route::post('/login', [AuthController::class, 'login']);
