@@ -24,6 +24,7 @@ class Card extends Model
 
     protected $casts = [
         'published_at' => 'datetime',
+        'word' => 'array',
         'deleted_at' => 'datetime'
     ];
 

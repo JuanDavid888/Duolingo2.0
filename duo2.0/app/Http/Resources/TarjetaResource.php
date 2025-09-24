@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CardResource extends JsonResource
+class TarjetaResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +17,7 @@ class CardResource extends JsonResource
         return [
             'id' => $this->id,
             'word' => is_array($this->word) && isset($this->word['sp'])
-            ? $this->word['sp'] : null,
+            ? $this->word['sp'] : '404',
             'file_path' => $this->file_path,
             'mime_type' => $this->mime_type,
             'code' => $this->code,

@@ -25,7 +25,8 @@ class StoreCardRequest extends FormRequest
             'id_lesson' => ['required', 'exists:lessons,id'],
             'id_category' => ['required', 'exists:categories,id'],
 
-            'word' => ['required', 'string', 'max:255'],
+            'word' => ['required', 'array'],
+            'word.*' => ['required', 'string', 'max:255'],
 
             'file_path' => ['required', 'file', 'mimes:png,jpeg,jpg,svg,mp3', 'max:10240'],
 

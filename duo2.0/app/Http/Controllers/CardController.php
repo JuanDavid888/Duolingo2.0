@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCardRequest;
@@ -58,7 +59,6 @@ class CardController extends Controller
         return $this->success(CardResource::collection($cards));
     }
 
-
     public function store(StoreCardRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -74,8 +74,6 @@ class CardController extends Controller
         return $this->success(new CardResource($newCard), 'Card created successfully', 201);
     }
 
-
-
     /**
      * Display the specified resource.
      */
@@ -90,13 +88,30 @@ class CardController extends Controller
         return $this->success(new CardResource($card), "Card found successfully");
     }
 
-
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateCardRequest $request, Card $card)
     {
-        //
+        // Get only the data that was sent in the request
+        $data = $request->only(['id_lesson', 'id_category', 'word', 'code', 'mime_type']);
+
+        // Get the file
+        if ($request->hasFile('file_path')) {
+            // Delete the previous file if it exists in storage
+            if ($card->file_path && Storage::exists($card->file_path)) {
+                Storage::delete($card->file_path);  // Eliminar el archivo anterior
+            }
+
+            // Save new file and update 'file_path' field
+            $data['file_path'] = $request->file('file_path')->store('posts', 'public');
+        }
+
+        $card->update($data);
+
+        $card->load(['lesson', 'category']);
+
+        return $this->success(new CardResource($card), 'Card updated successfully');
     }
 
     /**

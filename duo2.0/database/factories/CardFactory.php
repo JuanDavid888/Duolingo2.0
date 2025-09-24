@@ -24,7 +24,10 @@ class CardFactory extends Factory
         $type = fake()->randomElement($types);
 
         return [
-            'word' => fake()->unique()->word(),
+            'word' => [
+            'sp' => fake('es_ES')->unique()->word(),
+            'en' => fake('en_US')->unique()->word(),
+        ],
             'file_path' => 'uploads/' . fake()->unique()->uuid() . '.' . $type['ext'],
             'mime_type' => $type['mime'],
             'code' => strtoupper(fake()->unique()->bothify('?##????#??'))
