@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->unique(); // admin, therapist, viewer
             $table->string('label')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

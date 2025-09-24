@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('id_card')->constrained('cards')->onDelete('cascade');
             $table->string('card_code')->constrained('cards')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

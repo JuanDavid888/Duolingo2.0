@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('mime_type');
             $table->string('code')->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

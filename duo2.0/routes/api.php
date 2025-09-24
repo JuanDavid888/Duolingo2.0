@@ -36,15 +36,5 @@ Route::prefix('')->group(function () {
     // Rutas para restaurar y eliminar cards
     Route::prefix('cards')->group(function () {
         Route::post('{id}/restore', [CardController::class, 'restore']);
-        Route::delete('{id}/force-delete', [CardController::class, 'forceDelete']);
     });
-
-    // Ruta para asignar o desasignar imágenes o archivos de cards
-    Route::post('cards/{card}/attach-file', [CardController::class, 'attachFile']);
-    Route::delete('cards/{card}/detach-file', [CardController::class, 'detachFile']);
-    
-    // Relación de cards con lecciones (asociar/desasociar)
-    Route::post('cards/{card}/lessons/{lesson}', [CardController::class, 'attachLesson']);
-    Route::delete('cards/{card}/lessons/{lesson}', [CardController::class, 'detachLesson']);
 });
-

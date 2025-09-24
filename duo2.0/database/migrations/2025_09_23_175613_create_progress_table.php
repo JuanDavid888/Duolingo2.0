@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('id_lesson')->constrained('lessons')->onDelete('cascade');
             $table->unsignedInteger('score');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

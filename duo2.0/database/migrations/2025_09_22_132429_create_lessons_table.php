@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->enum('level', ['beginner', 'intermediate', 'advanced']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

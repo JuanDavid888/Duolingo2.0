@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('role_id')->nullable()->constrained()->onDelete('set null'); // Relación con la tabla roles
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         // Crear la tabla para los tokens de restablecimiento de contraseña

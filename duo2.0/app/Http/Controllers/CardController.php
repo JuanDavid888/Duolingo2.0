@@ -79,18 +79,17 @@ class CardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Card $card)
+    public function show($id)
     {
-        //
+        $card = Card::with(['lesson', 'category'])->find($id);
+
+        if (!$card) {
+            return $this->error("Card not found", 404, ['id' => 'The id provided doesn`t exists']);
+        }
+
+        return $this->success(new CardResource($card), "Card found successfully");
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Card $card)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -105,6 +104,20 @@ class CardController extends Controller
      */
     public function destroy(Card $card)
     {
-        //
+        $card->delete();
+        return $this->success(null, 'Card eliminated successfully');
+    }
+
+    public function restore(string $id)
+    {
+        // Include deleted records (withTrashed) to search for them
+        $card = Card::withTrashed()->find($id);
+    
+        if (!$card) {
+            return $this->error("Card not found", 404, ['id' => 'The id provided doesn`t exists']);
+        }
+    
+        $card->restore();
+        return $this->success(new CardResource($card),'Card correctly restored.');
     }
 }
