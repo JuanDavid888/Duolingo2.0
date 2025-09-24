@@ -28,13 +28,17 @@ Route::prefix('')->group(function () {
         'cards'     => CardController::class,
         'lessons'   => LessonController::class,
         'categories'=> CategoryController::class,
-    ]);
 
-    // Ruta para obtener las cards de una categoría
-    Route::get('/categories/{category}/cards', [CategoryController::class, 'cards']);
+        
+    ]);
     
     // Rutas para restaurar y eliminar cards
     Route::prefix('cards')->group(function () {
         Route::post('{id}/restore', [CardController::class, 'restore']);
+    });
+
+    // Rutas para restaurar y eliminar categories
+    Route::prefix('categories')->group(function () {
+        Route::post('{id}/restore', [CategoryController::class, 'restore']);
     });
 });

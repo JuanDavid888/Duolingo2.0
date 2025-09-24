@@ -17,6 +17,8 @@ class Category extends Model
 
     protected $casts = [
         'published_at' => 'datetime',
+        'name' => 'array',
+        'description' => 'array',
         'deleted_at' => 'datetime'
     ];
 

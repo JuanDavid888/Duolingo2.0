@@ -25,7 +25,13 @@ class CardController extends Controller
 
         // Some filters
         if ($request->has('word')) {
-            $query->where('word', 'like', '%' . $request->query('word') . '%');
+            $word = $request->query('word');
+            $query->where(function ($q) use ($word) {
+                $locales = ['sp', 'en']; // languages used
+                foreach ($locales as $locale) {
+                    $q->orWhere("word->{$locale}", 'like', "%{$word}%");
+                }
+            });
         }
 
         if ($request->has('mime_type')) {
