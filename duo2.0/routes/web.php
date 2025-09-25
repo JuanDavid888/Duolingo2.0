@@ -16,3 +16,8 @@ Route::get('/inicio', function () {
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
+
+// Ruta para la página de ejercicios de la web 
+Route::get('/principal', function () {
+    return view('auth.plf');
+})->name('inicio.web');

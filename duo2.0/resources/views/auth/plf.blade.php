@@ -421,7 +421,7 @@
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <div class="logo">duolingo</div>
+            <div class="logo">🐣Piko</div>
             <div class="nav-item active">
                 <div class="nav-icon" style="background: #58cc02;">🏠</div>
                 <div class="nav-text">Aprender</div>
