@@ -427,16 +427,8 @@
                 <div class="nav-text">Aprender</div>
             </div>
             <div class="nav-item">
-                <div class="nav-icon" style="background: #ff4b4b;">🔊</div>
-                <div class="nav-text">Sonidos</div>
-            </div>
-            <div class="nav-item">
                 <div class="nav-icon" style="background: #1cb0f6;">💪</div>
                 <div class="nav-text">Practicar</div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon" style="background: #ffc800;">🛡️</div>
-                <div class="nav-text">Ligas</div>
             </div>
             <div class="nav-item">
                 <div class="nav-icon" style="background: #ff9600;">🎯</div>
@@ -449,10 +441,6 @@
             <div class="nav-item">
                 <div class="nav-icon" style="background: #ce82ff;">👤</div>
                 <div class="nav-text">Perfil</div>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon" style="background: #ce82ff;">➕</div>
-                <div class="nav-text">Más</div>
             </div>
         </div>
 

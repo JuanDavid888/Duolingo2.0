@@ -21,3 +21,8 @@ Route::get('/login', function () {
 Route::get('/principal', function () {
     return view('auth.plf');
 })->name('inicio.web');
+
+// Ruta para la página de ejercicios de la web 
+Route::post('/registro', function () {
+    return view('auth.rgs');
+})->name('inicio.registro');
