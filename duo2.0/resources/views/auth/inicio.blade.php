@@ -557,14 +557,14 @@
                     <label class="remember-me">
                         <input type="checkbox" name="remember"> <span id="remember-text">Recordarme</span>
                     </label>
-                    <a href="#" class="forgot-password" id="forgot-password">¿Olvidaste tu contraseña?</a>
                 </div>
                 
                 <button type="submit" id="login-button">Iniciar sesión</button>
             </form>
             
             <div class="register-link">
-                <span id="no-account">¿No tienes una cuenta?</span> <a href="#" id="register-link">Regístrate aquí</a>
+                <span id="no-account">¿No tienes una cuenta?</span> 
+                <a href="{{ route('registro') }}" id="register-link">Regístrate aquí</a>
             </div>
         </div>
 
@@ -683,7 +683,6 @@
                     emailPlaceholder: "Correo electrónico",
                     passwordPlaceholder: "Contraseña",
                     rememberText: "Recordarme",
-                    forgotPassword: "¿Olvidaste tu contraseña?",
                     loginButton: "Iniciar sesión",
                     noAccount: "¿No tienes una cuenta?",
                     registerLink: "Regístrate aquí",

@@ -20,12 +20,13 @@ Route::get('/login', function () {
 // Ruta para la página de ejercicios de la web 
 Route::get('/principal', function () {
     return view('auth.plf');
-})->name('inicio.web');
+})->name('web');
 
 // Ruta para la página de ejercicios de la web 
 Route::get('/registro', function () {
     return view('auth.rgs');
-})->name('inicio.registro');
+})->name('registro');
+
 Route::post('/registro', function () {
     return view('auth.rgs');
 })->name('inicio.registro');
