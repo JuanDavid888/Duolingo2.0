@@ -8,7 +8,7 @@
     <style>
         /* Variables CSS inspiradas en Kipo */
         :root {
-            --kipo-yellow: #FFD166;
+            --kipo-yellow: #eeeae3;
             --kipo-orange: #FF9E6D;
             --kipo-blue: #06D6A0;
             --kipo-light-blue: #118AB2;
