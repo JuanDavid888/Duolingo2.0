@@ -23,6 +23,9 @@ Route::get('/principal', function () {
 })->name('inicio.web');
 
 // Ruta para la página de ejercicios de la web 
+Route::get('/registro', function () {
+    return view('auth.rgs');
+})->name('inicio.registro');
 Route::post('/registro', function () {
     return view('auth.rgs');
 })->name('inicio.registro');

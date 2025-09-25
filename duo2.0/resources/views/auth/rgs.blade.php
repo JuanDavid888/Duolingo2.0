@@ -558,7 +558,11 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('register') }}" id="registerForm">
+            <form action="/registro" method="POST">
+                @csrf
+                <input type="text" name="nombre" placeholder="Nombre">
+                <button type="submit">Registrar</button>
+            </form>            
                 @csrf
                 <div class="input-group">
                     <i class="fas fa-user"></i>
