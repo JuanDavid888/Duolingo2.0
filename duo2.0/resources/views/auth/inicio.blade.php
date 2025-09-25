@@ -532,7 +532,7 @@
             <h1 id="greeting">¡Hola de nuevo!</h1>
             <p id="subtitle">Inicia sesión para continuar tu aventura</p>
 
-            @if ($errors->any())
+            @if ($errors->any())t5x ui8gbf9bojk9e
                 <div class="error-message">
                     <i class="fas fa-exclamation-circle"></i>
                     {{ $errors->first() }}
@@ -558,8 +558,9 @@
                         <input type="checkbox" name="remember"> <span id="remember-text">Recordarme</span>
                     </label>
                 </div>
-                
-                <button type="submit" id="login-button">Iniciar sesión</button>
+                <a href="{{ route('web') }}" class="login-button" id="login-button">
+                    Iniciar sesión
+                </a>
             </form>
             
             <div class="register-link">

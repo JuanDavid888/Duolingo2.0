@@ -277,7 +277,8 @@
             text-decoration: underline;
         }
 
-        .form-section button {
+        /* ESTILOS DEL BOTÓN REGISTRO - NUEVOS */
+        .registro-button {
             padding: 15px;
             background: linear-gradient(135deg, var(--kipo-yellow), var(--kipo-orange));
             border: none;
@@ -290,18 +291,24 @@
             box-shadow: 0 5px 15px rgba(255, 209, 102, 0.4);
             position: relative;
             overflow: hidden;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            margin-top: 10px;
         }
 
-        .form-section button:hover {
+        .registro-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(255, 209, 102, 0.6);
+            color: var(--kipo-dark);
+            text-decoration: none;
         }
 
-        .form-section button:active {
+        .registro-button:active {
             transform: translateY(0);
         }
 
-        .form-section button::after {
+        .registro-button::after {
             content: '';
             position: absolute;
             top: 0;
@@ -312,7 +319,7 @@
             transition: 0.5s;
         }
 
-        .form-section button:hover::after {
+        .registro-button:hover::after {
             left: 100%;
         }
 
@@ -598,7 +605,10 @@
                     </label>
                 </div>
                 
-                <button type="submit" id="register-button">Crear cuenta</button>
+                <!-- Botón con diseño mejorado -->
+                <a href="{{ route('inicio.principal') }}" class="registro-button" id="registro-button">
+                    <i class="fas fa-user-plus" style="margin-right: 8px;"></i>Crear cuenta
+                </a>
             </form>
             
             <div class="login-link">
@@ -835,7 +845,7 @@
                 document.getElementById('confirmPassword').placeholder = translations[lang].confirmPasswordPlaceholder;
                 document.getElementById('terms-text').innerHTML = translations[lang].termsText + 
                     '<a href="#" class="terms-link">' + translations[lang].termsLink + '</a>';
-                document.getElementById('register-button').textContent = translations[lang].registerButton;
+                document.getElementById('registro-button').innerHTML = '<i class="fas fa-user-plus" style="margin-right: 8px;"></i>' + translations[lang].registerButton;
                 document.getElementById('have-account').textContent = translations[lang].haveAccount;
                 document.getElementById('login-link').textContent = translations[lang].loginLink;
                 document.getElementById('welcome-text').textContent = translations[lang].welcomeText;
