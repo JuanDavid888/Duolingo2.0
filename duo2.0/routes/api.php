@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AnswerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CardController;
@@ -8,10 +8,10 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 
-// Ruta para login
+// Route for Login
 Route::post('/login', [AuthController::class, 'login']);
 
-// Grupo de rutas para manejar los recursos
+// Group of routes for each table
 Route::prefix('')->group(function () {
 
     // Rutas de recursos para cards, lessons y categories
@@ -20,11 +20,10 @@ Route::prefix('')->group(function () {
         'cards'     => CardController::class,
         'lessons'   => LessonController::class,
         'categories'=> CategoryController::class,
-
-        
+        'answers'   => AnswerController::class,
     ]);
     
-    // Rutas para restaurar y eliminar
+    // Routess for delete and restore
     Route::prefix('cards')->group(function () {
         Route::post('{id}/restore', [CardController::class, 'restore']);
     });
@@ -35,5 +34,9 @@ Route::prefix('')->group(function () {
 
     Route::prefix('lessons')->group(function () {
         Route::post('{id}/restore', [LessonController::class, 'restore']);
+    });
+
+    Route::prefix('answers')->group(function () {
+        Route::post('{id}/restore', [AnswerController::class, 'restore']);
     });
 });

@@ -141,4 +141,52 @@ class CardController extends Controller
         $card->restore();
         return $this->success(new CardResource($card),'Card correctly restored.');
     }
+
+    public function indexEs(Request $request)
+{
+    // Forzar idioma a español
+    $request->merge(['lang' => 'es']);
+
+    $query = Card::with(['lesson', 'category']);
+
+    if ($request->has('word')) {
+        $word = $request->query('word');
+        $query->where(function ($q) use ($word) {
+            $locales = ['es', 'en'];
+            foreach ($locales as $locale) {
+                $q->orWhere("word->{$locale}", 'like', "%{$word}%");
+            }
+        });
+    }
+
+    if ($request->has('mime_type')) {
+        $query->where('mime_type', 'like', '%' . $request->query('mime_type') . '%');
+    }
+
+    if ($request->has('code')) {
+        $query->where('code', $request->query('code'));
+    }
+
+    $lessonId = $request->query('id_lesson');
+    $categoryId = $request->query('id_category');
+
+    if ($lessonId) {
+        $query->where('id_lesson', $lessonId);
+    }
+
+    if ($categoryId) {
+        $query->where('id_category', $categoryId);
+    }
+
+    $cards = $query->get();
+
+    if ($cards->isEmpty()) {
+        return response()->json([
+            'message' => 'There are no items matching the provided filters.',
+        ], 404);
+    }
+
+    return $this->success(CardResource::collection($cards));
+}
+
 }
