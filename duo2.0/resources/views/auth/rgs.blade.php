@@ -558,21 +558,18 @@
                 </div>
             @endif
 
-            <form action="/registro" method="POST">
+            <form id="registerForm" action="/registro" method="POST">
                 @csrf
-                <input type="text" name="nombre" placeholder="Nombre">
-                <button type="submit">Registrar</button>
-            </form>            
-                @csrf
+                
                 <div class="input-group">
                     <i class="fas fa-user"></i>
-                    <input type="text" name="name" id="name" placeholder="Nombre completo" required>
+                    <input type="text" name="name" id="name" placeholder="Nombre completo" required value="{{ old('name') }}">
                     <i class="fas fa-check validation-icon"></i>
                 </div>
                 
                 <div class="input-group">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" name="email" id="email" placeholder="Correo electrónico" required>
+                    <input type="email" name="email" id="email" placeholder="Correo electrónico" required value="{{ old('email') }}">
                     <i class="fas fa-check validation-icon"></i>
                 </div>
                 
