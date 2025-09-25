@@ -106,7 +106,7 @@ class CardController extends Controller
         if ($request->hasFile('file_path')) {
             // Delete the previous file if it exists in storage
             if ($card->file_path && Storage::exists($card->file_path)) {
-                Storage::delete($card->file_path);  // Eliminar el archivo anterior
+                Storage::delete($card->file_path);
             }
 
             // Save new file and update 'file_path' field

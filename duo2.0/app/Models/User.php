@@ -30,7 +30,7 @@ class User extends Authenticatable
      */
     public function role()
     {
-        return $this->belongsTo(Role::class);  // Un usuario tiene un solo rol
+        return $this->belongsTo(Role::class);
     }
 
     /**

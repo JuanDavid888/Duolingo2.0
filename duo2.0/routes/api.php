@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\UserController;
 
 // Route for Login
@@ -21,6 +22,7 @@ Route::prefix('')->group(function () {
         'lessons'   => LessonController::class,
         'categories'=> CategoryController::class,
         'answers'   => AnswerController::class,
+        'progress'  => ProgressController::class
     ]);
     
     // Routess for delete and restore
@@ -38,5 +40,9 @@ Route::prefix('')->group(function () {
 
     Route::prefix('answers')->group(function () {
         Route::post('{id}/restore', [AnswerController::class, 'restore']);
+    });
+
+    Route::prefix('progress')->group(function () {
+        Route::post('{id}/restore', [ProgressController::class, 'restore']);
     });
 });

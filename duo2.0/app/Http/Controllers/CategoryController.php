@@ -81,8 +81,14 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category): JsonResponse
+    public function update(UpdateCategoryRequest $request, $id): JsonResponse
     {
+        $category = Category::find($id);
+
+        if (!$category) {
+            return $this->error("Category not found", 404, ['id' => 'The category ID provided doesn`t exist']);
+        }
+
         $data = $request->validated();
 
         $category->update($data);

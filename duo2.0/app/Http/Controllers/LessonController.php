@@ -96,8 +96,14 @@ class LessonController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLessonRequest $request, Lesson $lesson): JsonResponse
+    public function update(UpdateLessonRequest $request, $id): JsonResponse
     {
+        $lesson = Lesson::find($id);
+
+        if (!$lesson) {
+            return $this->error("Lesson not found", 404, ['id' => 'The lesson id provided doesn`t exist']);
+        }
+
         $data = $request->validated();
 
         $lesson->update($data);

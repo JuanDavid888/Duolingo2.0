@@ -19,7 +19,7 @@ class ProgressController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Progress::with(['users', 'lessons']);
+        $query = Progress::with(['user', 'lesson']);
 
         // Some filters
         if ($request->has('id_user')) {
@@ -52,6 +52,18 @@ class ProgressController extends Controller
     {
         $data = $request->validated();
 
+        // Verify if an 'id_user' exists with an 'id_lesson'
+        $existingProgress = Progress::where('id_user', $data['id_user'])
+            ->where('id_lesson', $data['id_lesson'])
+            ->first();
+            
+        if ($existingProgress) {
+            return $this->error('Progress already exists for this user and lesson', 400, [
+                'id_user' => 'The user already has progress for this lesson.',
+                'id_lesson' => 'The lesson already has progress for this user.'
+            ]);
+        }
+
         $progress = Progress::create($data);
 
         return $this->success(new ProgressResource($progress), 'Progress created successfully', 201);
@@ -74,10 +86,32 @@ class ProgressController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAnswerRequest $request, Progress $progress): JsonResponse
+    public function update(UpdateProgressRequest $request, $id): JsonResponse
     {
+        $progress = Progress::find($id);
+
+        if (!$progress) {
+            return $this->error("Progress not found", 404, ['id' => 'The progress id provided doesn`t exist']);
+        }
+
         $data = $request->validated();
 
+        // Verfify if 'id_user' already exists with 'id_lesson'
+        if (isset($data['id_user'], $data['id_lesson']) && 
+            ($data['id_user'] !== $progress->id_user || $data['id_lesson'] !== $progress->id_lesson)) {
+
+            $existingProgress = Progress::where('id_user', $data['id_user'])
+                ->where('id_lesson', $data['id_lesson'])
+                ->first();
+
+            if ($existingProgress) {
+                return $this->error('Progress already exists for this user and lesson', 400, [
+                    'id_user' => 'The user already has progress for this lesson.',
+                    'id_lesson' => 'The lesson already has progress for this user.'
+                ]);
+            }
+        }
+        
         $progress->update($data);
 
         return $this->success(new ProgressResource($progress), 'Progress updated successfully');

@@ -23,4 +23,14 @@ class Progress extends Model
         'published_at' => 'datetime',
         'deleted_at' => 'datetime'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class, 'id_lesson');
+    }
 }

@@ -90,8 +90,14 @@ class AnswerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAnswerRequest $request, Answer $answer): JsonResponse
+    public function update(UpdateAnswerRequest $request, $id): JsonResponse
     {
+        $answer = Answer::find($id);
+
+        if (!$answer) {
+            return $this->error("Answer not found", 404, ['id' => 'The answer id provided doesn`t exist']);
+        }
+
         $data = $request->validated();
 
         // Update the id_card according to the card_code associated
@@ -99,7 +105,7 @@ class AnswerController extends Controller
             $card = Card::where('code', $data['card_code'])->first();
 
             if (!$card) {
-                return $this->error('Card with this code does not exist.', 404);
+                return $this->error('Card with this code does not exist.', 404, ['card_code' => 'The card code provided doesn’t exist']);
             }
 
             $data['id_card'] = $card->id;
