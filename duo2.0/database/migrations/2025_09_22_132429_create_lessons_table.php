@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_category')->constrained('categories')->onDelete('cascade');
             $table->string('title')->unique();
-            $table->string('description')->nullable();
-            $table->enum('level', ['beginner', 'intermediate', 'advanced']);
+            $table->text('description');
+            $table->string('level');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -18,11 +18,11 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => [
-                'sp' => fake('es_ES')->unique()->word(),
+                'es' => fake('es_ES')->unique()->word(),
                 'en' => fake('en_US')->unique()->word(),
             ],
             'description' => [
-                'sp' => substr(fake('es_ES')->paragraph(), 0, 150),
+                'es' => substr(fake('es_ES')->paragraph(), 0, 150),
                 'en' => substr(fake('en_US')->paragraph(), 0, 150),
             ],
         ];

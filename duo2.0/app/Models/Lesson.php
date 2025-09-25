@@ -22,6 +22,9 @@ class Lesson extends Model
 
     protected $casts = [
         'published_at' => 'datetime',
+        'title' => 'array',
+        'description' => 'array',
+        'level' => 'array',
         'deleted_at' => 'datetime'
     ];
 

@@ -24,7 +24,7 @@ class CategoryController extends Controller
         if ($request->has('name')) {
             $name = $request->query('name');
             $query->where(function ($q) use ($name) {
-                $locales = ['sp', 'en'];
+                $locales = ['es', 'en'];
                 foreach ($locales as $locale) {
                     $q->orWhere("name->{$locale}", 'like', "%{$name}%");
                 }
@@ -34,7 +34,7 @@ class CategoryController extends Controller
         if ($request->has('description')) {
             $description = $request->query('description');
             $query->where(function ($q) use ($description) {
-                $locales = ['sp', 'en'];
+                $locales = ['es', 'en'];
                 foreach ($locales as $locale) {
                     $q->orWhere("description->{$locale}", 'like', "%{$description}%");
                 }
@@ -81,9 +81,13 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category): JsonResponse
     {
-        //
+        $data = $request->validated();
+
+        $category->update($data);
+
+        return $this->success(new CategoryResource($category), 'Category updated successfully');
     }
 
     /**

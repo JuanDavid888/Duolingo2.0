@@ -25,7 +25,7 @@ class CardFactory extends Factory
 
         return [
             'word' => [
-            'sp' => fake('es_ES')->unique()->word(),
+            'es' => fake('es_ES')->unique()->word(),
             'en' => fake('en_US')->unique()->word(),
         ],
             'file_path' => 'uploads/' . fake()->unique()->uuid() . '.' . $type['ext'],

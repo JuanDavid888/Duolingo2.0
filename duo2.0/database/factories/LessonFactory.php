@@ -17,9 +17,20 @@ class LessonFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence(3),
-            'description' => fake()->optional(0.3)->paragraph(),
-            'level' => fake()->randomElement(['beginner', 'intermediate', 'advanced'])
+            'title' => [
+                'es' => fake('es_ES')->sentence(3),
+                'en' => fake('en_US')->sentence(3),
+            ],
+
+            'description' => [
+                'es' => substr(fake('es_ES')->paragraph(), 0, 150),
+                'en' => substr(fake('en_US')->paragraph(), 0, 150),
+            ],
+
+            'level' => [
+                'es' => fake('es_ES')->randomElement(['principiante', 'intermedio', 'avanzado']),
+                'en' => fake('en_US')->randomElement(['beginner', 'intermediate', 'advanced']),
+            ],
         ];
     }
 }

@@ -27,7 +27,7 @@ class CardController extends Controller
         if ($request->has('word')) {
             $word = $request->query('word');
             $query->where(function ($q) use ($word) {
-                $locales = ['sp', 'en']; // languages used
+                $locales = ['es', 'en']; // languages used
                 foreach ($locales as $locale) {
                     $q->orWhere("word->{$locale}", 'like', "%{$word}%");
                 }
