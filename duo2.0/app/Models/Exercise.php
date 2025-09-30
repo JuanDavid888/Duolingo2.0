@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Answer extends Model
+class Exercise extends Model
 {
-    /** @use HasFactory<\Database\Factories\AnswerFactory> */
+    /** @use HasFactory<\Database\Factories\LessonFactory> */
     use HasFactory, SoftDeletes;
 
-    protected $table = "answers";
+    protected $table = "exercises";
 
     protected $fillable = [
-        'id_card',
         'card_code',
+        'answer_card_code'
     ];
 
     protected $casts = [
@@ -28,8 +28,8 @@ class Answer extends Model
         return $this->belongsTo(Card::class, 'id_card');
     }
 
-    public function exercise()
+    public function answer()
     {
-        return $this->belongsTo(Exercise::class, 'card_code', 'answer_card_code');
+        return $this->hasOne(Answer::class, 'card_code', 'answer_card_code');
     }
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProgressRequest;
-use App\Http\Requests\UpdateAnswerRequest;
 use App\Http\Requests\UpdateProgressRequest;
 use App\Http\Resources\ProgressResource;
 use App\Traits\ApiResponse;

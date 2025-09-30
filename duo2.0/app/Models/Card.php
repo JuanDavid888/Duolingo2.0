@@ -42,4 +42,9 @@ class Card extends Model
     {
         return $this->hasOne(Answer::class, 'id_card');
     }
+
+    public function exercises()
+    {
+        return $this->hasMany(Exercise::class, 'card_code');
+    }
 }

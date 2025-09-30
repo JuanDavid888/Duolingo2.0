@@ -8,6 +8,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ExerciseController;
 
 // Route for Login
 Route::post('/login', [AuthController::class, 'login']);
@@ -22,7 +23,8 @@ Route::prefix('')->group(function () {
         'lessons'   => LessonController::class,
         'categories'=> CategoryController::class,
         'answers'   => AnswerController::class,
-        'progress'  => ProgressController::class
+        'progress'  => ProgressController::class,
+        'exercises' => ExerciseController::class,
     ]);
     
     // Routess for delete and restore
