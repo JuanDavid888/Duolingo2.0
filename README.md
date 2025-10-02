@@ -1,3 +1,8 @@
+# Repo notas_laravel por Juan Jaimes
+https://github.com/JuanDavid888/Notas_Laravel.git
+
+<br>
+
 # Plataforma Interactiva de Comunicación y Aprendizaje para Personas con Trastornos de Lenguaje
 
 En Colombia, miles de personas enfrentan retos comunicativos debido a condiciones como el **Trastorno del Espectro Autista (TEA)**, la **afasia**, la **disartria** y otras alteraciones del lenguaje. Según estimaciones del Ministerio de Salud y Protección Social, uno de cada 160 niños presenta algún tipo de autismo, y el país aún enfrenta desafíos significativos en términos de inclusión educativa, accesibilidad comunicativa y atención especializada.

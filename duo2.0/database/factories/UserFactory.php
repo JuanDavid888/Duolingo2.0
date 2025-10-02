@@ -30,6 +30,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),  // Establecemos la verificación del correo
             'password' => static::$password ??= Hash::make('password'),  // Contraseña por defecto
+            'is_active' => fake()->boolean(),
             'remember_token' => Str::random(10),  // Token de recordatorio
         ];
     }

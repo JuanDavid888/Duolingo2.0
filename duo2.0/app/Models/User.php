@@ -16,6 +16,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'is_actie',
         'email_verified_at', 
         'remember_token'
     ];

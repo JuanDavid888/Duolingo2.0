@@ -11,7 +11,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExerciseController;
 
 // Route for Login
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/inicio', [AuthController::class, 'login'])
+->middleware('auth:state'); //Middleware de validación de estado del usuario
 
 // Group of routes for each table
 Route::prefix('')->group(function () {
