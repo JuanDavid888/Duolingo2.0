@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\UserFavoriteController;
 
 // Route for Login
 Route::post('/login', [AuthController::class, 'login']);
@@ -25,6 +26,7 @@ Route::prefix('')->group(function () {
         'answers'   => AnswerController::class,
         'progress'  => ProgressController::class,
         'exercises' => ExerciseController::class,
+        'favorites' => UserFavoriteController::class,
     ]);
     
     // Routess for delete and restore
@@ -46,5 +48,9 @@ Route::prefix('')->group(function () {
 
     Route::prefix('progress')->group(function () {
         Route::post('{id}/restore', [ProgressController::class, 'restore']);
+    });
+
+    Route::prefix('favorites')->group(function(){
+        Route::post('{id}/restore',[UserFavoriteController::class, 'restore']);
     });
 });
